@@ -1,0 +1,759 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Introduction to Chemistry</title>
+<style>
+:root{--nav:#183247;--accent:#2f6e73;--accent-soft:#e7f1f1;--bg:#f5f7f9;--ink:#22303c;--muted:#687684;--line:#d8e0e6;--warn:#8c641d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.course-shell{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100vh}.student-nav{background:#fff;border-right:1px solid var(--line);padding:18px 14px;position:sticky;top:0;height:100vh;overflow:auto}.student-nav .brand{font-weight:850;color:var(--nav);margin-bottom:14px}.student-nav a{display:block;text-decoration:none;color:var(--ink);padding:8px 9px;border-radius:8px;font-size:13px}.student-nav a:hover{background:var(--accent-soft);color:var(--accent)}.student-nav .nav-module>a:first-child{font-weight:800;margin-top:5px}.student-nav .nav-lesson{padding-left:20px;color:var(--muted)}
+.wrap{max-width:980px;margin:auto}.content{min-width:0}header{background:var(--nav);color:white;padding:36px 20px}header .eyebrow{font-size:13px;opacity:.78}header h1{margin:7px 0 6px;font-size:31px}header p{margin:0;color:#d8e4ec;line-height:1.5}
+main{padding:22px 20px 42px}.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:19px;margin-bottom:16px}.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.chip{background:#eef3f6;border-radius:999px;padding:7px 10px;font-size:12px}.offline-download-panel{margin-top:16px;padding:14px;border:1px solid #c8dfdf;background:#f4fbfb;border-radius:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.offline-download-panel strong{color:var(--nav)}.offline-download-panel span{color:var(--muted);font-size:13px;flex:1;min-width:220px}.download-row{margin-top:10px}.download-btn{display:inline-block;text-decoration:none;background:var(--accent);color:#fff!important;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:750}.download-btn:hover{filter:brightness(.95)}
+.objectives{padding-left:20px}.objectives li{margin:7px 0}.module{margin-top:26px;scroll-margin-top:16px}.module-head{border-bottom:2px solid #d8e5e5;padding-bottom:9px;margin-bottom:12px}.module-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:800}.module h2{margin:3px 0 3px;font-size:22px}.module-head p{margin:5px 0 0;color:var(--muted)}
+.lesson-stack{display:grid;gap:12px}.lesson{background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden;scroll-margin-top:16px}.lesson summary{list-style:none;cursor:pointer;padding:15px 17px;font-weight:800;display:flex;justify-content:space-between;gap:12px}.lesson summary::-webkit-details-marker{display:none}.lesson summary small{font-weight:600;color:var(--muted)}.lesson-body{padding:0 17px 17px;border-top:1px solid var(--line)}
+.lesson-intro{color:#4f5e6a;line-height:1.6}.block{margin-top:13px;padding:14px;border-radius:10px;border:1px solid var(--line);background:#fbfcfd}.block.callout{border-left:4px solid var(--accent);background:#f6fbfb}.block.example{border-left:4px solid #b48938;background:#fffcf5}.block h4{margin:0 0 7px;font-size:15px}.block .rich{line-height:1.6}.block .rich p:first-child{margin-top:0}.block .rich p:last-child{margin-bottom:0}
+.formula{font-size:19px;line-height:1.7}.katex-formula{overflow-x:auto;padding:4px 0}.katex-error{color:#b23b3b;font-family:Consolas,monospace;font-size:14px}
+.lesson-image{max-width:100%;max-height:520px;display:block;margin:8px auto;border-radius:9px}.caption{text-align:center;color:var(--muted);font-size:12px;margin-top:7px}
+.seq-instructions{color:#4f5e6a;margin:4px 0 12px}
+.seq-track{display:flex;gap:12px;flex-wrap:wrap;padding:6px 2px}
+.seq-card{display:flex;align-items:center;gap:4px;background:#fff;border:2px solid var(--line);border-radius:10px;padding:8px;width:168px;cursor:grab;transition:border-color .15s,box-shadow .15s}
+.seq-card.dragging{opacity:.4}
+.seq-card.seq-correct{border-color:#2f8f5b;box-shadow:0 0 0 2px rgba(47,143,91,.15)}
+.seq-card.seq-incorrect{border-color:#b23b3b;box-shadow:0 0 0 2px rgba(178,59,59,.12)}
+.seq-card-body{flex:1;min-width:0;text-align:center}
+.seq-card-body img{width:100%;height:90px;object-fit:cover;border-radius:6px;display:block}
+.seq-caption{font-size:12px;color:#445563;margin-top:6px;line-height:1.3}
+.seq-move{border:1px solid var(--line);background:#f5f7f9;border-radius:6px;width:26px;height:26px;font-size:16px;line-height:1;cursor:pointer;flex-shrink:0;color:var(--nav)}
+.seq-move:hover{background:#e7f1f1}
+.seq-actions{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.seq-check-btn,.seq-shuffle-btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer}
+.seq-shuffle-btn{background:#fff;color:var(--accent)}
+.seq-feedback{font-size:13px;font-weight:700;color:var(--nav)}
+.label-instructions{color:#4f5e6a;margin:4px 0 12px}
+.label-diagram-wrap{position:relative;max-width:640px}
+.label-diagram-wrap img{width:100%;height:auto;display:block;border-radius:9px}
+.label-dot{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;border:none;background:none;padding:0;cursor:pointer}
+.label-dot:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:50%}
+.label-dot-num{width:26px;height:26px;border-radius:50%;background:#fff;border:2px solid var(--accent);color:var(--accent);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.label-dot.label-dot-filled .label-dot-num{display:none}
+.label-dot.label-correct .label-chip{border-color:#2f8f5b;background:#eaf7ee}
+.label-dot.label-incorrect .label-chip{border-color:#b23b3b;background:#fbeaea}
+.label-tray{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding:10px;border:1px dashed var(--line);border-radius:9px;min-height:46px}
+.label-chip{border:2px solid var(--accent);background:#fff;color:var(--nav);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.label-chip.label-chip-selected{background:var(--accent);color:#fff}
+.label-chip.dragging{opacity:.4}
+.label-chip.label-chip-placed{box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.label-actions{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.label-check-btn,.label-reset-btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer}
+.label-reset-btn{background:#fff;color:var(--accent)}
+.label-feedback{font-size:13px;font-weight:700;color:var(--nav)}
+.match-instructions{color:#4f5e6a;margin:4px 0 12px}
+.match-bins{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.match-bin{flex:1;min-width:160px;border:2px dashed var(--line);border-radius:10px;padding:10px;background:#fbfcfd;cursor:pointer}
+.match-bin-label{font-weight:800;color:var(--nav);font-size:13px;margin-bottom:8px;text-align:center}
+.match-bin-image{display:block;max-width:100%;max-height:110px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+.match-bin-cards{display:flex;flex-direction:column;gap:6px;min-height:40px}
+.match-tray{display:flex;gap:8px;flex-wrap:wrap;padding:10px;border:1px dashed var(--line);border-radius:9px;min-height:46px}
+.match-card{display:flex;align-items:center;gap:8px;border:2px solid var(--accent);background:#fff;color:var(--nav);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;text-align:left}
+.match-card-image{width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0}
+.match-card.match-card-selected{background:var(--accent);color:#fff}
+.match-card.dragging{opacity:.4}
+.match-card.match-correct{border-color:#2f8f5b;background:#eaf7ee}
+.match-card.match-incorrect{border-color:#b23b3b;background:#fbeaea}
+.match-actions{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.match-check-btn,.match-reset-btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer}
+.match-reset-btn{background:#fff;color:var(--accent)}
+.match-feedback{font-size:13px;font-weight:700;color:var(--nav)}
+.quiz-instructions{color:#4f5e6a;margin:4px 0 12px}
+.quiz-question{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px;background:#fbfcfd}
+.quiz-q-image{display:block;max-width:100%;max-height:240px;border-radius:8px;margin-bottom:10px}
+.quiz-prompt{font-weight:700;color:var(--nav);margin-bottom:10px}
+.quiz-options{display:flex;flex-direction:column;gap:8px}
+.quiz-option{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:2px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:9px 12px;font-size:13px;cursor:pointer;font-family:inherit}
+.quiz-opt-image{width:64px;height:64px;object-fit:cover;border-radius:6px;flex-shrink:0}
+.quiz-option:hover:not(:disabled){border-color:var(--accent)}
+.quiz-option.quiz-selected{background:var(--accent);color:#fff;border-color:var(--accent)}
+.assessment-actions{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.assessment-finish-btn{border:1px solid #b23b3b;background:#b23b3b;color:#fff;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer}
+.assessment-status{font-size:13px;font-weight:700;color:var(--nav)}
+.assessment-locked-note{font-size:12px;color:#666;font-style:italic}
+#assessment-pin-gate{position:fixed;inset:0;background:var(--nav);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+#assessment-pin-gate .gate-box{background:#fff;color:#111;border-radius:12px;padding:32px;max-width:360px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+#assessment-pin-gate h2{margin:0 0 8px;font-size:18px;color:var(--nav)}
+#assessment-pin-gate p{margin:0 0 18px;color:#556;font-size:13px}
+#assessment-pin-gate input{width:100%;padding:12px;font-size:20px;text-align:center;letter-spacing:4px;border:2px solid var(--line);border-radius:8px;margin-bottom:12px;box-sizing:border-box}
+#assessment-pin-gate input.gate-text-input{text-align:left;letter-spacing:normal;font-size:15px}
+#assessment-pin-gate button{width:100%;padding:11px;background:var(--accent);color:#fff;border:0;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer}
+#assessment-pin-gate .gate-error{color:#b23b3b;font-size:12px;margin-top:8px;min-height:16px}
+#assessment-timer-bar{position:sticky;top:0;background:var(--nav);color:#fff;padding:10px 16px;text-align:center;font-weight:700;font-size:14px;z-index:100}
+#assessment-timer-bar.low-time{background:#b23b3b}
+#assessment-finished-banner{background:#eaf7ee;border:1px solid #2f8f5b;border-radius:9px;padding:14px;margin:14px 0;text-align:center}
+#assessment-finished-banner h3{margin:0 0 6px;color:#1a6b3c}
+#assessment-finished-banner button{margin-top:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer}
+.quiz-option:disabled{cursor:default}
+.quiz-option.quiz-correct{border-color:#2f8f5b;background:#eaf7ee;font-weight:700}
+.quiz-option.quiz-incorrect{border-color:#b23b3b;background:#fbeaea}
+.quiz-explanation{margin-top:10px;padding:10px;background:#eef3f6;border-radius:8px;font-size:13px;color:#445563}
+.quiz-summary{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.quiz-retry-btn{border:1px solid var(--accent);background:#fff;color:var(--accent);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer}
+.quiz-score{font-size:13px;font-weight:700;color:var(--nav)}
+.resources{display:grid;gap:8px;margin-top:12px}.res{display:grid;grid-template-columns:40px 1fr auto;gap:11px;align-items:center;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff}.res:hover{border-color:#8cb2b4;background:#fbfefe}.res-icon{width:36px;height:36px;border-radius:9px;background:#eef3f6;display:grid;place-items:center}.res strong{display:block}.res small{display:block;color:var(--muted);margin-top:3px;line-height:1.35}.badge{font-size:11px;border-radius:999px;padding:5px 8px;background:#eef3f6;color:#4f5e6a}.badge.required{background:#fff3da;color:#7e5b17}.resource-note{margin-top:5px;font-size:12px;color:#556674}.lesson-objs{margin:12px 0;padding-left:20px}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:28px}
+@media(max-width:850px){.course-shell{grid-template-columns:1fr}.student-nav{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.student-nav .nav-lesson{display:inline-block;padding-left:9px}.nav-module{margin-bottom:4px}}
+@media(max-width:600px){header h1{font-size:25px}.res{grid-template-columns:40px 1fr}.badge{grid-column:2;justify-self:start}}
+
+</style></head><body data-instance-id="752ef636-8381-4137-b1bc-5b3f04fb48b3">
+<div class="course-shell">
+<nav class="student-nav"><div class="brand">Introduction to Chemistry</div><a href="#top">Course Home</a><div class="nav-module"><a href="#module-1">CHEM-G9-INTRO · Introduction to Chemistry</a><a class="nav-lesson" href="#lesson-1-1">CHEM-G9-INTRO-01 · Introduction to Chemistry</a></div></nav>
+<div class="content">
+<header id="top"><div class="wrap"><div class="eyebrow">Chemistry · Grade 9</div><h1>Introduction to Chemistry</h1><p>Learning resources for offline study</p></div></header>
+<main class="wrap">
+<section class="panel"><div class="md-body" style="line-height:1.65;margin-top:0">An introductory Grade 9 course pack covering the meaning of chemistry, matter, the importance of chemistry in everyday life, and the three main branches: organic, inorganic and physical chemistry.</div><div class="meta"><span class="chip">Online course</span></div><div class="offline-download-panel"><strong>Need to study without Internet?</strong><span>Download the complete course once, extract the ZIP, and open index.html.</span><a class="download-btn" href="downloads/introduction-to-chemistry-offline.zip" download>Download entire course</a></div></section>
+<section class="panel"><h2 style="font-size:19px;margin-top:0">Course learning objectives</h2><ol><li>Define in their own words the term chemistry.</li><li>State the three main branches of chemistry.</li><li>Identify at least five chemists and outline their contributions to the development of chemistry.</li><li>Identify at least three ways in which chemistry contributes to everyday life.</li></ol></section>
+
+    <section class="module" id="module-1">
+      <div class="module-head"><span class="module-kicker">CHEM-G9-INTRO</span><h2>Introduction to Chemistry</h2><p>Foundations of chemistry: matter, everyday applications, and the main branches of chemistry.</p><div class="download-row"><a class="download-btn" href="downloads/module-01-introduction-to-chemistry.zip" download>Download this module for offline use</a></div></div>
+      <div class="lesson-stack"><details class="lesson" id="lesson-1-1" open><summary><span>CHEM-G9-INTRO-01 · Introduction to Chemistry</span><small>12 content · 0 resources</small></summary><div class="lesson-body"><div class="lesson-intro md-body">Learn what chemistry and matter are, why chemistry matters in daily life, and distinguish organic, inorganic and physical chemistry.</div><h4>Lesson objectives</h4><ul><li>Define chemistry in their own words.</li><li>Define matter and distinguish matter from examples of non-matter.</li><li>State and describe the three main branches of chemistry.</li><li>Identify at least three ways chemistry contributes to everyday life.</li></ul><div class="block rich"><h4>What Is Chemistry?</h4><div class="rich"><p><strong>Chemistry</strong> is the study of <strong>matter</strong> and the changes that matter undergoes.</p><p>As you work through this lesson, think about the materials and changes you observe around you every day.</p></div></div><div class="block rich"><h4>Matter and Non-Matter</h4><div class="rich"><p><strong>Matter</strong> is anything that has mass and occupies space.</p><p>Examples of <strong>non-matter</strong> given in the lesson are heat, light, sound and energy.</p><p><strong>Think:</strong> Identify three examples of matter in your surroundings and explain why each qualifies as matter.</p></div></div><div class="block rich"><h4>Why Study Chemistry?</h4><div class="rich"><p>Chemistry helps us to:</p><ol><li>Explain the natural world.</li><li>Prepare for a career.</li><li>Become informed citizens.</li></ol></div></div><div class="block rich"><h4>Chemistry in Everyday Life</h4><div class="rich"><p>Chemical reactions are constantly taking place around us. Examples from the lesson include:</p><ul><li><strong>The human body:</strong> digestion, muscle movement and other bodily actions involve chemical reactions.</li><li><strong>Photosynthesis:</strong> plants convert water, sunlight and carbon dioxide into glucose and oxygen.</li><li><strong>Soaps and detergents:</strong> these can be produced by a chemical process called <strong>saponification</strong>.</li><li><strong>Sunscreen:</strong> organic and inorganic compounds can filter or block incoming ultraviolet radiation.</li><li><strong>Cooking:</strong> chemical reactions can change the flavour, texture and colour of food.</li></ul></div></div><div class="block rich"><h4>The Three Main Branches of Chemistry</h4><div class="rich"><p>The lesson identifies three main branches of chemistry:</p><ol><li><strong>Organic chemistry</strong></li><li><strong>Inorganic chemistry</strong></li><li><strong>Physical chemistry</strong></li></ol></div></div><div class="block rich"><h4>Organic Chemistry</h4><div class="rich"><p><strong>Organic chemistry</strong> is the branch of chemistry involving the scientific study of organic compounds. The lesson describes organic compounds as compounds containing carbon atoms bonded to hydrogen.</p><p>It deals with the structure and chemical composition of organic compounds, their physical and chemical properties, and the chemical reactions they undergo. <strong>Methane</strong> is shown as an example.</p></div></div><div class="block rich"><h4>Inorganic Chemistry</h4><div class="rich"><p><strong>Inorganic chemistry</strong> is the branch of chemistry involving the scientific study of inorganic compounds. The lesson describes these as compounds that do not contain carbon-hydrogen bonds.</p><p>Examples given are <strong>sodium chloride</strong>, <strong>magnesium oxide</strong> and <strong>water</strong>. Inorganic chemistry studies the behaviour, properties, and physical and chemical characteristics of these compounds.</p></div></div><div class="block rich"><h4>Physical Chemistry</h4><div class="rich"><p><strong>Physical chemistry</strong> is concerned with interactions and transformations when matter undergoes change.</p><p>It uses principles of physics to help explain chemical interactions.</p></div></div><div class="block match-block" ><h4>Match &amp; Sort: Branches of Chemistry</h4><div class="match-instructions md-body">Drag each card into the branch of chemistry that best matches it, then check your sorting.</div><div class="match-bins"><div class="match-bin" data-bin-id="bin-cc07255afe01" role="button" tabindex="0"><div class="match-bin-label">Organic Chemistry</div><div class="match-bin-cards"></div></div><div class="match-bin" data-bin-id="bin-0c0b88f3db21" role="button" tabindex="0"><div class="match-bin-label">Inorganic Chemistry</div><div class="match-bin-cards"></div></div><div class="match-bin" data-bin-id="bin-5b56caecfc67" role="button" tabindex="0"><div class="match-bin-label">Physical Chemistry</div><div class="match-bin-cards"></div></div></div><div class="match-tray"><button type="button" class="match-card" draggable="true" data-card-id="card-000a73258f49" data-correct-bin="bin-0c0b88f3db21"><span>Studies inorganic compounds and their physical and chemical characteristics.</span></button><button type="button" class="match-card" draggable="true" data-card-id="card-ab4f78224230" data-correct-bin="bin-cc07255afe01"><span>Studies compounds containing carbon atoms bonded to hydrogen.</span></button><button type="button" class="match-card" draggable="true" data-card-id="card-126d3e5fb250" data-correct-bin="bin-5b56caecfc67"><span>Concerned with interactions and transformations when matter undergoes change.</span></button><button type="button" class="match-card" draggable="true" data-card-id="card-edc1bb96164d" data-correct-bin="bin-cc07255afe01"><span>Methane</span></button><button type="button" class="match-card" draggable="true" data-card-id="card-3ab29c43ea5e" data-correct-bin="bin-cc07255afe01"><span>Studies the structure, composition, properties and reactions of organic compounds.</span></button><button type="button" class="match-card" draggable="true" data-card-id="card-9aef682bbd81" data-correct-bin="bin-0c0b88f3db21"><span>Magnesium oxide</span></button><button type="button" class="match-card" draggable="true" data-card-id="card-59b4b2bcd238" data-correct-bin="bin-0c0b88f3db21"><span>Sodium chloride</span></button><button type="button" class="match-card" draggable="true" data-card-id="card-dc26320cc689" data-correct-bin="bin-5b56caecfc67"><span>Uses principles of physics to understand chemical interactions.</span></button></div><div class="match-actions"><button type="button" class="match-check-btn">Check my sorting</button><button type="button" class="match-reset-btn">Reset</button><span class="match-feedback" aria-live="polite"></span></div></div><div class="block callout"><h4>Research Assignment</h4><div class="rich"><p>In groups of 5–6, research five chemists and outline their contributions to the development of chemistry. Present the findings as a project, booklet or chart.</p><p><strong>Suggested rubric from the source:</strong> chemists and contributions (10 marks); pictures (2); biographical information (2); creativity and neatness (2); timeliness (2); grammar/mechanics (2). Total: 20 marks.</p></div></div><div class="block rich"><h4>Review Questions</h4><div class="rich"><ol><li>Define chemistry.</li><li>Define matter.</li><li>Give one example of matter and one example of non-matter.</li><li>Name the three main branches of chemistry.</li><li>Differentiate between organic and inorganic chemistry.</li><li>Define physical chemistry.</li><li>Give two examples of chemistry in everyday life.</li><li>Classify familiar compounds as organic or inorganic using the ideas in this lesson.</li></ol></div></div><div class="block quiz-block" ><h4>Check Your Understanding</h4><div class="quiz-instructions md-body">Choose the best answer for each question. After answering, read the explanation.</div><div class="quiz-question" data-question-id="q-8d594bfa3622"><div class="quiz-prompt md-body">1. Which statement best defines chemistry?</div><div class="quiz-options"><button type="button" class="quiz-option" data-option-id="opt-4a2a4ad980ee" data-correct="true"><span>The study of matter and the changes that matter undergoes</span></button><button type="button" class="quiz-option" data-option-id="opt-e3d01a4df6c8" data-correct="false"><span>The study of forces and motion only</span></button><button type="button" class="quiz-option" data-option-id="opt-05e344789496" data-correct="false"><span>The study of living organisms only</span></button><button type="button" class="quiz-option" data-option-id="opt-4afd65982f9c" data-correct="false"><span>The study of heat, light and sound</span></button></div><div class="quiz-explanation md-body" hidden>Chemistry is the study of matter and the changes that matter undergoes.</div></div><div class="quiz-question" data-question-id="q-f36dda7e7a20"><div class="quiz-prompt md-body">2. Which of the following is an example of non-matter?</div><div class="quiz-options"><button type="button" class="quiz-option" data-option-id="opt-0914628d35c5" data-correct="true"><span>Sound</span></button><button type="button" class="quiz-option" data-option-id="opt-96aae6306b9a" data-correct="false"><span>Methane</span></button><button type="button" class="quiz-option" data-option-id="opt-8dc213f761e0" data-correct="false"><span>Sodium chloride</span></button><button type="button" class="quiz-option" data-option-id="opt-f27d584d0ee6" data-correct="false"><span>Water</span></button></div><div class="quiz-explanation md-body" hidden>Sound is listed as non-matter. Matter has mass and occupies space.</div></div><div class="quiz-question" data-question-id="q-5772c87c4384"><div class="quiz-prompt md-body">3. Which branch of chemistry studies compounds such as methane that contain carbon bonded to hydrogen?</div><div class="quiz-options"><button type="button" class="quiz-option" data-option-id="opt-a80539da570b" data-correct="false"><span>Astronomy</span></button><button type="button" class="quiz-option" data-option-id="opt-7b2eb0cfd7e4" data-correct="true"><span>Organic chemistry</span></button><button type="button" class="quiz-option" data-option-id="opt-b035a06d3409" data-correct="false"><span>Inorganic chemistry</span></button><button type="button" class="quiz-option" data-option-id="opt-375c59ae97de" data-correct="false"><span>Physical chemistry</span></button></div><div class="quiz-explanation md-body" hidden>Organic chemistry studies organic compounds, described in the source as compounds containing carbon atoms bonded to hydrogen.</div></div><div class="quiz-question" data-question-id="q-2e38e990aa5b"><div class="quiz-prompt md-body">4. Which substance is given as an example of an inorganic compound?</div><div class="quiz-options"><button type="button" class="quiz-option" data-option-id="opt-8a4de212a662" data-correct="false"><span>Sugar</span></button><button type="button" class="quiz-option" data-option-id="opt-92e1af53f715" data-correct="true"><span>Sodium chloride</span></button><button type="button" class="quiz-option" data-option-id="opt-0e6b44e775c1" data-correct="false"><span>Ethanol</span></button><button type="button" class="quiz-option" data-option-id="opt-1f0b9c503aef" data-correct="false"><span>Methane</span></button></div><div class="quiz-explanation md-body" hidden>Sodium chloride is given as an example of an inorganic compound.</div></div><div class="quiz-question" data-question-id="q-4a4dcfd8b4ea"><div class="quiz-prompt md-body">5. Which everyday process is described as a chemical reaction that forms glucose and oxygen from water, carbon dioxide and sunlight?</div><div class="quiz-options"><button type="button" class="quiz-option" data-option-id="opt-a1735c6ad03f" data-correct="false"><span>Boiling</span></button><button type="button" class="quiz-option" data-option-id="opt-1c08f73c62ff" data-correct="false"><span>Digestion</span></button><button type="button" class="quiz-option" data-option-id="opt-c57f4fc5851f" data-correct="false"><span>Saponification</span></button><button type="button" class="quiz-option" data-option-id="opt-7073d50dfcc7" data-correct="true"><span>Photosynthesis</span></button></div><div class="quiz-explanation md-body" hidden>Photosynthesis is described as a chemical reaction in which plants convert water, sunlight and carbon dioxide into glucose and oxygen.</div></div><div class="quiz-summary"><button type="button" class="quiz-retry-btn">Try Again</button><span class="quiz-score" aria-live="polite"></span></div></div></div></details></div>
+    </section>
+<footer>This online course can also be downloaded for offline study using the course or module download buttons.</footer>
+</main></div></div>
+<script>
+
+(function(){
+  function getDragAfterElement(track,x){
+    var cards=[].slice.call(track.querySelectorAll('.seq-card:not(.dragging)'));
+    return cards.reduce(function(closest,card){
+      var box=card.getBoundingClientRect(),offset=x-box.left-box.width/2;
+      if(offset<0&&offset>closest.offset)return{offset:offset,element:card};
+      return closest;
+    },{offset:-Infinity}).element;
+  }
+  document.querySelectorAll('.seq-track').forEach(function(track){
+    track.querySelectorAll('.seq-card').forEach(function(card){
+      card.addEventListener('dragstart',function(){card.classList.add('dragging')});
+      card.addEventListener('dragend',function(){card.classList.remove('dragging')});
+    });
+    track.addEventListener('dragover',function(e){
+      e.preventDefault();
+      var dragging=track.querySelector('.dragging');if(!dragging)return;
+      var after=getDragAfterElement(track,e.clientX);
+      if(after==null)track.appendChild(dragging);else track.insertBefore(dragging,after);
+    });
+    track.addEventListener('drop',function(e){e.preventDefault()});
+  });
+  document.querySelectorAll('.seq-move').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var card=btn.closest('.seq-card'),dir=+btn.dataset.dir,track=card.parentElement;
+      if(dir<0&&card.previousElementSibling)track.insertBefore(card,card.previousElementSibling);
+      else if(dir>0&&card.nextElementSibling)track.insertBefore(card.nextElementSibling,card);
+    });
+  });
+  document.querySelectorAll('.seq-check-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var block=btn.closest('.seq-block'),cards=[].slice.call(block.querySelectorAll('.seq-card')),correct=0;
+      cards.forEach(function(card,i){
+        var ok=+card.dataset.correctIndex===i;
+        card.classList.toggle('seq-correct',ok);card.classList.toggle('seq-incorrect',!ok);
+        if(ok)correct++;
+      });
+      var feedback=block.querySelector('.seq-feedback');
+      feedback.textContent=correct===cards.length?'All in the correct order! 🎉':(correct+' of '+cards.length+' in the correct position.');
+    });
+  });
+  document.querySelectorAll('.seq-shuffle-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var block=btn.closest('.seq-block'),track=block.querySelector('.seq-track'),cards=[].slice.call(track.children);
+      for(var i=cards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=cards[i];cards[i]=cards[j];cards[j]=t}
+      cards.forEach(function(c){track.appendChild(c);c.classList.remove('seq-correct','seq-incorrect')});
+      var feedback=block.querySelector('.seq-feedback');if(feedback)feedback.textContent='';
+    });
+  });
+  document.querySelectorAll('.label-block').forEach(function(block){
+    var tray=block.querySelector('.label-tray'),selectedChip=null;
+    function clearSelection(){if(selectedChip){selectedChip.classList.remove('label-chip-selected');selectedChip=null}}
+    function returnChipToTray(chip){
+      chip.classList.remove('label-chip-placed');
+      var dot=chip.closest('.label-dot');if(dot)dot.classList.remove('label-dot-filled','label-correct','label-incorrect');
+      tray.appendChild(chip);
+    }
+    function placeChipOnDot(chip,dot){
+      var existing=dot.querySelector('.label-chip');
+      if(existing)returnChipToTray(existing);
+      chip.classList.add('label-chip-placed');
+      dot.appendChild(chip);
+      dot.classList.add('label-dot-filled');
+      dot.classList.remove('label-correct','label-incorrect');
+    }
+    function selectChip(chip){
+      clearSelection();
+      selectedChip=chip;
+      chip.classList.add('label-chip-selected');
+    }
+    block.querySelectorAll('.label-chip').forEach(function(chip){
+      chip.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(chip.classList.contains('label-chip-placed')){returnChipToTray(chip);clearSelection();return}
+        if(chip===selectedChip){clearSelection();return}
+        selectChip(chip);
+      });
+      chip.addEventListener('dragstart',function(){chip.classList.add('dragging');selectChip(chip)});
+      chip.addEventListener('dragend',function(){chip.classList.remove('dragging')});
+    });
+    block.querySelectorAll('.label-dot').forEach(function(dot){
+      dot.addEventListener('click',function(e){
+        if(e.target.closest('.label-chip'))return;
+        if(selectedChip){placeChipOnDot(selectedChip,dot);clearSelection()}
+      });
+      dot.addEventListener('keydown',function(e){
+        if(e.key!=='Enter'&&e.key!==' ')return;
+        e.preventDefault();
+        if(e.target!==dot)return;
+        if(selectedChip){placeChipOnDot(selectedChip,dot);clearSelection()}
+      });
+      dot.addEventListener('dragover',function(e){e.preventDefault()});
+      dot.addEventListener('drop',function(e){
+        e.preventDefault();
+        var dragging=block.querySelector('.label-chip.dragging');
+        if(dragging){placeChipOnDot(dragging,dot);clearSelection()}
+      });
+    });
+    var checkBtn=block.querySelector('.label-check-btn');
+    if(checkBtn)checkBtn.addEventListener('click',function(){
+      var dots=[].slice.call(block.querySelectorAll('.label-dot')),correct=0;
+      dots.forEach(function(dot){
+        var chip=dot.querySelector('.label-chip');
+        var ok=!!chip&&chip.dataset.chipId===dot.dataset.dotId;
+        dot.classList.toggle('label-correct',ok);
+        dot.classList.toggle('label-incorrect',!ok);
+        if(ok)correct++;
+      });
+      var feedback=block.querySelector('.label-feedback');
+      feedback.textContent=correct===dots.length?'All labels correct! 🎉':(correct+' of '+dots.length+' correct.');
+    });
+    var resetBtn=block.querySelector('.label-reset-btn');
+    if(resetBtn)resetBtn.addEventListener('click',function(){
+      clearSelection();
+      var chips=[].slice.call(block.querySelectorAll('.label-dot .label-chip'));
+      chips.forEach(function(chip){returnChipToTray(chip)});
+      block.querySelectorAll('.label-dot').forEach(function(dot){dot.classList.remove('label-correct','label-incorrect','label-dot-filled')});
+      var trayChips=[].slice.call(tray.children);
+      for(var i=trayChips.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=trayChips[i];trayChips[i]=trayChips[j];trayChips[j]=t}
+      trayChips.forEach(function(c){tray.appendChild(c)});
+      var feedback=block.querySelector('.label-feedback');if(feedback)feedback.textContent='';
+    });
+  });
+  document.querySelectorAll('.match-block').forEach(function(block){
+    var tray=block.querySelector('.match-tray'),selectedCard=null;
+    function clearSelection(){if(selectedCard){selectedCard.classList.remove('match-card-selected');selectedCard=null}}
+    function returnCardToTray(card){
+      card.classList.remove('match-card-placed');
+      tray.appendChild(card);
+    }
+    function placeCardInBin(card,bin){
+      card.classList.add('match-card-placed');
+      bin.querySelector('.match-bin-cards').appendChild(card);
+      card.classList.remove('match-correct','match-incorrect');
+    }
+    function selectCard(card){clearSelection();selectedCard=card;card.classList.add('match-card-selected')}
+    block.querySelectorAll('.match-card').forEach(function(card){
+      card.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(selectedCard&&selectedCard!==card&&card.classList.contains('match-card-placed')){
+          var targetBin=card.closest('.match-bin');
+          if(targetBin){placeCardInBin(selectedCard,targetBin);clearSelection();return}
+        }
+        if(card.classList.contains('match-card-placed')){returnCardToTray(card);clearSelection();return}
+        if(card===selectedCard){clearSelection();return}
+        selectCard(card);
+      });
+      card.addEventListener('dragstart',function(){card.classList.add('dragging');selectCard(card)});
+      card.addEventListener('dragend',function(){card.classList.remove('dragging')});
+    });
+    block.querySelectorAll('.match-bin').forEach(function(bin){
+      bin.addEventListener('click',function(e){
+        if(e.target.closest('.match-card'))return;
+        if(selectedCard){placeCardInBin(selectedCard,bin);clearSelection()}
+      });
+      bin.addEventListener('keydown',function(e){
+        if(e.key!=='Enter'&&e.key!==' ')return;
+        if(e.target!==bin)return;
+        e.preventDefault();
+        if(selectedCard){placeCardInBin(selectedCard,bin);clearSelection()}
+      });
+      bin.addEventListener('dragover',function(e){e.preventDefault()});
+      bin.addEventListener('drop',function(e){
+        e.preventDefault();
+        var dragging=block.querySelector('.match-card.dragging');
+        if(dragging){placeCardInBin(dragging,bin);clearSelection()}
+      });
+    });
+    var checkBtn=block.querySelector('.match-check-btn');
+    if(checkBtn)checkBtn.addEventListener('click',function(){
+      var cards=[].slice.call(block.querySelectorAll('.match-card')),correct=0;
+      cards.forEach(function(card){
+        var bin=card.closest('.match-bin');
+        var ok=!!bin&&bin.dataset.binId===card.dataset.correctBin;
+        card.classList.toggle('match-correct',ok);
+        card.classList.toggle('match-incorrect',!ok);
+        if(ok)correct++;
+      });
+      var feedback=block.querySelector('.match-feedback');
+      feedback.textContent=correct===cards.length?'All matched correctly! 🎉':(correct+' of '+cards.length+' correct.');
+    });
+    var resetBtn=block.querySelector('.match-reset-btn');
+    if(resetBtn)resetBtn.addEventListener('click',function(){
+      clearSelection();
+      var cards=[].slice.call(block.querySelectorAll('.match-card'));
+      cards.forEach(function(c){c.classList.remove('match-correct','match-incorrect','match-card-placed');tray.appendChild(c)});
+      var trayCards=[].slice.call(tray.children);
+      for(var i=trayCards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=trayCards[i];trayCards[i]=trayCards[j];trayCards[j]=t}
+      trayCards.forEach(function(c){tray.appendChild(c)});
+      var feedback=block.querySelector('.match-feedback');if(feedback)feedback.textContent='';
+    });
+  });
+  document.querySelectorAll('.quiz-block').forEach(function(block){
+    if(block.dataset.assessmentMode==='true'){
+      var aQuestions=[].slice.call(block.querySelectorAll('.quiz-question'));
+      aQuestions.forEach(function(qEl){
+        var opts=[].slice.call(qEl.querySelectorAll('.quiz-option'));
+        opts.forEach(function(opt){
+          opt.addEventListener('click',function(){
+            opts.forEach(function(o){o.classList.remove('quiz-selected')});
+            opt.classList.add('quiz-selected');
+          });
+        });
+      });
+      return;
+    }
+    var questions=[].slice.call(block.querySelectorAll('.quiz-question'));
+    function updateScore(){
+      var answered=block.querySelectorAll('.quiz-question.quiz-answered').length;
+      var correct=block.querySelectorAll('.quiz-question.quiz-answered .quiz-was-correct-pick').length;
+      var scoreEl=block.querySelector('.quiz-score');
+      if(scoreEl)scoreEl.textContent='You\'ve answered '+answered+' of '+questions.length+' questions, '+correct+' correct.';
+    }
+    questions.forEach(function(qEl){
+      var options=[].slice.call(qEl.querySelectorAll('.quiz-option'));
+      options.forEach(function(opt){
+        opt.addEventListener('click',function(){
+          if(qEl.classList.contains('quiz-answered'))return;
+          qEl.classList.add('quiz-answered');
+          var isCorrect=opt.dataset.correct==='true';
+          opt.classList.add(isCorrect?'quiz-correct':'quiz-incorrect');
+          if(isCorrect)opt.classList.add('quiz-was-correct-pick');
+          if(!isCorrect){
+            var trueCorrect=qEl.querySelector('.quiz-option[data-correct="true"]');
+            if(trueCorrect)trueCorrect.classList.add('quiz-correct');
+          }
+          options.forEach(function(o){o.disabled=true});
+          var explain=qEl.querySelector('.quiz-explanation');
+          if(explain)explain.hidden=false;
+          updateScore();
+        });
+      });
+    });
+    var retryBtn=block.querySelector('.quiz-retry-btn');
+    if(retryBtn)retryBtn.addEventListener('click',function(){
+      questions.forEach(function(qEl){
+        qEl.classList.remove('quiz-answered');
+        var options=[].slice.call(qEl.querySelectorAll('.quiz-option'));
+        options.forEach(function(o){o.disabled=false;o.classList.remove('quiz-correct','quiz-incorrect','quiz-was-correct-pick')});
+        var container=qEl.querySelector('.quiz-options');
+        for(var i=options.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=options[i];options[i]=options[j];options[j]=t}
+        options.forEach(function(o){container.appendChild(o)});
+        var explain=qEl.querySelector('.quiz-explanation');
+        if(explain)explain.hidden=true;
+      });
+      updateScore();
+    });
+    updateScore();
+  });
+})();
+
+(function(){
+  var assessBlocks=[].slice.call(document.querySelectorAll('[data-assessment-mode="true"]'));
+  if(!assessBlocks.length)return;
+
+  function esc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m];});
+  }
+
+  var instanceId=document.body.getAttribute('data-instance-id')||'default';
+  var storageKey='ocpb-assess-'+instanceId;
+  var pin=assessBlocks[0].getAttribute('data-assessment-pin')||'';
+  var timeLimitMin=parseFloat(assessBlocks[0].getAttribute('data-assessment-time')||'0')||0;
+  var collectInfo=(assessBlocks[0].getAttribute('data-assessment-collect-info')||'false')==='true';
+  var tabSwitchEnabled=(assessBlocks[0].getAttribute('data-assessment-tab-switch')||'false')==='true';
+
+  function loadState(){
+    try{var raw=localStorage.getItem(storageKey);return raw?JSON.parse(raw):null;}catch(e){return null;}
+  }
+  function saveState(st){
+    try{localStorage.setItem(storageKey,JSON.stringify(st));}catch(e){}
+  }
+
+  var state=loadState();
+
+  function captureResponses(){
+    var out=[];
+    assessBlocks.forEach(function(block){
+      var titleEl=block.querySelector('h4');
+      var title=titleEl?titleEl.textContent:'Activity';
+      if(block.classList.contains('quiz-block')){
+        var qs=[].slice.call(block.querySelectorAll('.quiz-question')).map(function(qEl,idx){
+          var sel=qEl.querySelector('.quiz-option.quiz-selected');
+          var promptEl=qEl.querySelector('.quiz-prompt');
+          var promptText=promptEl?promptEl.textContent.replace(/^\d+\.\s*/,''):'';
+          return {n:idx+1,prompt:promptText,answer:sel?sel.textContent.trim():'(no answer selected)'};
+        });
+        out.push({title:title,type:'quiz',items:qs});
+      }else if(block.classList.contains('seq-block')){
+        var cards=[].slice.call(block.querySelectorAll('.seq-card'));
+        var order=cards.map(function(c,idx){
+          var cap=c.querySelector('.seq-caption');
+          var img=c.querySelector('img');
+          var lbl=cap?cap.textContent.trim():(img?(img.getAttribute('alt')||('Image '+(idx+1))):('Item '+(idx+1)));
+          return {n:idx+1,label:lbl};
+        });
+        out.push({title:title,type:'sequence',items:order});
+      }else if(block.classList.contains('label-block')){
+        var dots=[].slice.call(block.querySelectorAll('.label-dot'));
+        var placements=dots.map(function(d,idx){
+          var chip=d.querySelector('.label-chip');
+          return {n:idx+1,label:chip?chip.textContent.trim():'(nothing placed)'};
+        });
+        out.push({title:title,type:'label',items:placements});
+      }else if(block.classList.contains('match-block')){
+        var bins=[].slice.call(block.querySelectorAll('.match-bin'));
+        var sorting=bins.map(function(bin){
+          var labelEl=bin.querySelector('.match-bin-label');
+          var cardsIn=[].slice.call(bin.querySelectorAll('.match-card')).map(function(c){return c.textContent.trim()||'(image card)';});
+          return {category:labelEl?labelEl.textContent.trim():'(category)',cards:cardsIn};
+        });
+        var unsorted=[].slice.call(block.querySelectorAll('.match-tray .match-card')).map(function(c){return c.textContent.trim()||'(image card)';});
+        out.push({title:title,type:'match',sorting:sorting,unsorted:unsorted});
+      }
+    });
+    return out;
+  }
+
+  function lockAllInteraction(){
+    assessBlocks.forEach(function(block){
+      [].slice.call(block.querySelectorAll('button,[draggable]')).forEach(function(el){
+        el.setAttribute('disabled','disabled');
+        el.removeAttribute('draggable');
+        el.style.pointerEvents='none';
+        el.style.opacity='0.6';
+      });
+    });
+  }
+
+  function computeScore(block){
+    if(block.classList.contains('quiz-block')){
+      var qs=[].slice.call(block.querySelectorAll('.quiz-question')),correct=0;
+      qs.forEach(function(qEl){
+        var sel=qEl.querySelector('.quiz-option.quiz-selected');
+        if(sel&&sel.dataset.correct==='true')correct++;
+      });
+      return {correct:correct,total:qs.length};
+    }
+    if(block.classList.contains('seq-block')){
+      var cards=[].slice.call(block.querySelectorAll('.seq-card')),correct=0;
+      cards.forEach(function(card,i){if(+card.dataset.correctIndex===i)correct++;});
+      return {correct:correct,total:cards.length};
+    }
+    if(block.classList.contains('label-block')){
+      var dots=[].slice.call(block.querySelectorAll('.label-dot')),correct=0;
+      dots.forEach(function(dot){
+        var chip=dot.querySelector('.label-chip');
+        if(chip&&chip.dataset.chipId===dot.dataset.dotId)correct++;
+      });
+      return {correct:correct,total:dots.length};
+    }
+    if(block.classList.contains('match-block')){
+      var cards=[].slice.call(block.querySelectorAll('.match-card')),correct=0;
+      cards.forEach(function(card){
+        var bin=card.closest('.match-bin');
+        if(bin&&bin.dataset.binId===card.dataset.correctBin)correct++;
+      });
+      return {correct:correct,total:cards.length};
+    }
+    return null;
+  }
+
+  function computeAggregateScore(){
+    var totalCorrect=0,totalQuestions=0,anyScored=false;
+    assessBlocks.forEach(function(block){
+      if(block.getAttribute('data-assessment-show-score')==='true'){
+        var s=computeScore(block);
+        if(s&&s.total>0){anyScored=true;totalCorrect+=s.correct;totalQuestions+=s.total;}
+      }
+    });
+    return anyScored?{correct:totalCorrect,total:totalQuestions}:null;
+  }
+
+  var PRINT_RESPONSES_CSS='@page{size:auto;margin:14mm 14mm 15mm}*{box-sizing:border-box}body{margin:0;background:#eef1f3;color:#111;font-family:Arial,Helvetica,sans-serif;font-size:11pt;line-height:1.35}.screenbar{position:sticky;top:0;background:#183247;color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;z-index:5;gap:10px;flex-wrap:wrap}.screenbar button{border:0;border-radius:6px;padding:8px 12px;font-weight:700;cursor:pointer}.paper{max-width:210mm;margin:18px auto;background:#fff;padding:14mm 15mm;box-shadow:0 7px 24px rgba(0,0,0,.12)}h1{font-size:16pt;margin:0 0 4px}h2{font-size:13pt;margin:16px 0 8px;border-bottom:1px solid #ccc;padding-bottom:4px}.print-instructions{color:#444;margin:0 0 10px}.print-question{margin:0 0 10px;break-inside:avoid-page}.print-q-prompt{font-weight:700;margin-bottom:4px}.print-opt{margin:3px 0;display:flex;gap:8px;align-items:baseline}.print-opt-mark{display:inline-block;min-width:16px;flex-shrink:0;font-weight:700}.print-match-columns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px}.print-match-column{flex:1;min-width:140px;border:1px solid #999;border-radius:8px;padding:10px}.print-match-column-label{font-weight:700;margin-bottom:6px}@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{background:#fff}.screenbar{display:none}.paper{max-width:none;margin:0;padding:0;box-shadow:none}}';
+
+  function formatTimestamp(ms){
+    try{return new Date(ms).toLocaleString();}catch(e){return String(ms);}
+  }
+  function buildResponsesPrintHTML(responses,title,meta){
+    var sections=responses.map(function(r){
+      if(r.type==='quiz'){
+        var qh=r.items.map(function(it){return '<div class="print-question"><div class="print-q-prompt">'+it.n+'. '+esc(it.prompt)+'</div><div class="print-opt"><span class="print-opt-mark">&rarr;</span><span>'+esc(it.answer)+'</span></div></div>';}).join('');
+        return '<h2>'+esc(r.title)+'</h2>'+qh;
+      }
+      if(r.type==='sequence'){
+        var sh=r.items.map(function(it){return '<div class="print-opt"><span class="print-opt-mark">'+it.n+'.</span><span>'+esc(it.label)+'</span></div>';}).join('');
+        return '<h2>'+esc(r.title)+'</h2><p class="print-instructions">Order submitted by student (position 1 to '+r.items.length+'):</p>'+sh;
+      }
+      if(r.type==='label'){
+        var lh=r.items.map(function(it){return '<div class="print-opt"><span class="print-opt-mark">Target '+it.n+':</span><span>'+esc(it.label)+'</span></div>';}).join('');
+        return '<h2>'+esc(r.title)+'</h2><p class="print-instructions">Labels placed by student, by numbered target on the diagram:</p>'+lh;
+      }
+      if(r.type==='match'){
+        var mh=r.sorting.map(function(s){return '<div class="print-match-column"><div class="print-match-column-label">'+esc(s.category)+'</div><div>'+(s.cards.length?s.cards.map(function(c){return '<div>'+esc(c)+'</div>';}).join(''):'<div class="print-instructions">(empty)</div>')+'</div></div>';}).join('');
+        var unsortedH=r.unsorted.length?'<p class="print-instructions">Not sorted into any category: '+r.unsorted.map(esc).join(', ')+'</p>':'';
+        return '<h2>'+esc(r.title)+'</h2><div class="print-match-columns">'+mh+'</div>'+unsortedH;
+      }
+      return '';
+    }).join('');
+    var metaLines='';
+    if(meta.studentName){
+      metaLines+='<p class="print-instructions"><strong>Student:</strong> '+esc(meta.studentName)+'&nbsp;&nbsp;&nbsp;<strong>Class:</strong> '+esc(meta.studentClass||'')+'</p>';
+    }
+    metaLines+='<p class="print-instructions"><strong>Completed:</strong> '+esc(formatTimestamp(meta.completedAt))+'&nbsp;&nbsp;&nbsp;<strong>Printed:</strong> '+esc(formatTimestamp(meta.printedAt))+'</p>';
+    if(meta.score){
+      metaLines+='<p class="print-instructions"><strong>Score:</strong> '+meta.score.correct+' of '+meta.score.total+' correct.</p>';
+    }
+    var disclaimer=meta.score?'Submitted responses \u2014 the score above was calculated automatically from what the student selected or arranged.':'Submitted responses \u2014 for teacher grading. Not scored automatically.';
+    return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+' \u2014 My Responses</title><style>'+PRINT_RESPONSES_CSS+'</style></head><body><div class="screenbar"><strong>'+esc(title)+' \u2014 My Responses</strong><button onclick="window.print()">Print / Save as PDF</button></div><main class="paper"><h1>'+esc(title)+'</h1>'+metaLines+'<p class="print-instructions"><em>'+disclaimer+'</em></p>'+sections+'</main></body></html>';
+  }
+
+  function openResponsesPrint(responses,meta){
+    var title=document.title||'Activity';
+    var fullMeta={studentName:(meta&&meta.studentName)||'',studentClass:(meta&&meta.studentClass)||'',completedAt:(meta&&meta.completedAt)||Date.now(),printedAt:Date.now(),score:(meta&&meta.score)||null};
+    var html=buildResponsesPrintHTML(responses,title,fullMeta);
+    var w=window.open('','_blank');
+    if(!w){alert('Please allow pop-ups to print your responses.');return;}
+    w.document.write(html);
+    w.document.close();
+  }
+
+  function showFinishedUI(st){
+    lockAllInteraction();
+    assessBlocks.forEach(function(block){
+      var actionsEl=block.querySelector('[data-assessment-actions]');
+      if(!actionsEl)return;
+      actionsEl.innerHTML='';
+      var banner=document.createElement('div');
+      banner.id='assessment-finished-banner';
+      var msg=document.createElement('h3');
+      msg.textContent='You have already completed this activity.';
+      var sub=document.createElement('p');
+      var reasonText=st.reason==='time_up'?' automatically when time ran out.':(st.reason==='tab_switch'?' automatically because you switched away from this tab or window.':'.');
+      sub.textContent='Your responses were submitted'+reasonText;
+      var btn=document.createElement('button');
+      btn.type='button';
+      btn.textContent='Print My Responses Again';
+      btn.addEventListener('click',function(){openResponsesPrint(st.responses,{studentName:st.studentName,studentClass:st.studentClass,completedAt:st.completedAt,score:st.score});});
+      banner.appendChild(msg);banner.appendChild(sub);banner.appendChild(btn);
+      actionsEl.appendChild(banner);
+    });
+  }
+
+  function finish(reason){
+    stopTabSwitchDetection();
+    var responses=captureResponses();
+    var score=computeAggregateScore();
+    state={pinVerified:true,studentName:(state&&state.studentName)||'',studentClass:(state&&state.studentClass)||'',startedAt:(state&&state.startedAt)||Date.now(),completed:true,completedAt:Date.now(),reason:reason,responses:responses,score:score};
+    saveState(state);
+    if(timerInterval)clearInterval(timerInterval);
+    showFinishedUI(state);
+    openResponsesPrint(responses,{studentName:state.studentName,studentClass:state.studentClass,completedAt:state.completedAt,score:state.score});
+  }
+
+  function addFinishButtons(){
+    assessBlocks.forEach(function(block){
+      var actionsEl=block.querySelector('[data-assessment-actions]');
+      if(!actionsEl)return;
+      actionsEl.innerHTML='';
+      var btn=document.createElement('button');
+      btn.type='button';
+      btn.className='assessment-finish-btn';
+      btn.textContent='Finish & Print My Responses';
+      btn.addEventListener('click',function(){
+        if(window.confirm('Once you finish, you cannot change your answers. Continue?')){finish('submitted');}
+      });
+      var note=document.createElement('span');
+      note.className='assessment-locked-note';
+      note.textContent='You get one attempt. Finishing locks your answers.';
+      actionsEl.appendChild(btn);
+      actionsEl.appendChild(note);
+    });
+  }
+
+  var timerInterval=null;
+  function formatTime(ms){
+    var totalSec=Math.max(0,Math.ceil(ms/1000));
+    var m=Math.floor(totalSec/60),s=totalSec%60;
+    return m+':'+(s<10?'0':'')+s;
+  }
+  function startTimer(startedAt){
+    if(!timeLimitMin)return;
+    var endsAt=startedAt+timeLimitMin*60000;
+    var bar=document.createElement('div');
+    bar.id='assessment-timer-bar';
+    document.body.insertBefore(bar,document.body.firstChild);
+    function tick(){
+      var remaining=endsAt-Date.now();
+      if(remaining<=0){
+        clearInterval(timerInterval);
+        bar.textContent='Time is up.';
+        finish('time_up');
+        return;
+      }
+      bar.textContent='Time remaining: '+formatTime(remaining);
+      if(remaining<60000)bar.classList.add('low-time');
+    }
+    timerInterval=setInterval(tick,1000);
+    tick();
+  }
+
+  var audioCtx=null;
+  function ensureAudioUnlocked(){
+    if(audioCtx)return;
+    try{
+      var Ctx=window.AudioContext||window.webkitAudioContext;
+      if(Ctx){audioCtx=new Ctx();if(audioCtx.state==='suspended')audioCtx.resume();}
+    }catch(e){}
+  }
+  function playAlertSound(){
+    if(!audioCtx)return;
+    try{
+      var beep=function(startTime,freq){
+        var osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+        osc.type='sine';osc.frequency.value=freq;
+        osc.connect(gain);gain.connect(audioCtx.destination);
+        gain.gain.setValueAtTime(0.35,startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001,startTime+0.28);
+        osc.start(startTime);osc.stop(startTime+0.3);
+      };
+      var now=audioCtx.currentTime;
+      beep(now,880);beep(now+0.35,880);beep(now+0.7,880);
+    }catch(e){}
+  }
+  function onVisibilityChange(){
+    if(document.hidden){
+      stopTabSwitchDetection();
+      playAlertSound();
+      finish('tab_switch');
+    }
+  }
+  function startTabSwitchDetection(){
+    if(!tabSwitchEnabled)return;
+    document.addEventListener('visibilitychange',onVisibilityChange);
+  }
+  function stopTabSwitchDetection(){
+    document.removeEventListener('visibilitychange',onVisibilityChange);
+  }
+
+  function beginAttempt(){
+    ensureAudioUnlocked();
+    var startedAt=(state&&state.startedAt)||Date.now();
+    if(!state||!state.startedAt){state=state||{};state.startedAt=startedAt;saveState(state);}
+    startTimer(startedAt);
+    addFinishButtons();
+    startTabSwitchDetection();
+  }
+
+  function showGateScreen(){
+    var overlay=document.createElement('div');
+    overlay.id='assessment-pin-gate';
+    var box=document.createElement('div');
+    box.className='gate-box';
+    var heading;
+    if(pin&&collectInfo)heading='Enter the PIN and your details to begin';
+    else if(pin)heading='Enter the PIN to begin';
+    else if(collectInfo)heading='Enter your details to begin';
+    else heading='Click Start to begin';
+    var subText;
+    if(pin)subText='Ask your teacher for today\'s PIN.';
+    else if(collectInfo)subText='Your teacher needs this to identify your submission.';
+    else subText='';
+    var html='<h2>'+heading+'</h2>';
+    if(subText)html+='<p>'+subText+'</p>';
+    if(tabSwitchEnabled)html+='<p style="color:#a06a00"><strong>Once you start, switching away from this tab or window will end the assessment immediately.</strong></p>';
+    box.innerHTML=html;
+    var pinInput=null,nameInput=null,classInput=null;
+    if(pin){
+      pinInput=document.createElement('input');
+      pinInput.type='text';pinInput.inputMode='numeric';pinInput.id='assessment-pin-input';pinInput.maxLength=12;
+      pinInput.placeholder='PIN';
+      box.appendChild(pinInput);
+    }
+    if(collectInfo){
+      nameInput=document.createElement('input');
+      nameInput.type='text';nameInput.id='assessment-name-input';nameInput.className='gate-text-input';nameInput.placeholder='Full name';
+      box.appendChild(nameInput);
+      classInput=document.createElement('input');
+      classInput.type='text';classInput.id='assessment-class-input';classInput.className='gate-text-input';classInput.placeholder='Class / Section';
+      box.appendChild(classInput);
+    }
+    var submitBtn=document.createElement('button');
+    submitBtn.type='button';submitBtn.textContent='Start';
+    box.appendChild(submitBtn);
+    var errEl=document.createElement('div');
+    errEl.className='gate-error';
+    box.appendChild(errEl);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    document.body.style.overflow='hidden';
+    function submit(){
+      if(pin&&pinInput.value.trim()!==pin){
+        errEl.textContent='Incorrect PIN. Try again.';
+        pinInput.value='';
+        pinInput.focus();
+        return;
+      }
+      var name='',cls='';
+      if(collectInfo){
+        name=nameInput.value.trim();
+        cls=classInput.value.trim();
+        if(!name||!cls){
+          errEl.textContent='Please enter both your name and class to continue.';
+          return;
+        }
+      }
+      overlay.remove();
+      document.body.style.overflow='';
+      assessBlocks.forEach(function(block){block.style.visibility='';});
+      state=state||{};
+      state.pinVerified=true;
+      if(collectInfo){state.studentName=name;state.studentClass=cls;}
+      state.startedAt=state.startedAt||Date.now();
+      saveState(state);
+      beginAttempt();
+    }
+    submitBtn.addEventListener('click',submit);
+    [pinInput,nameInput,classInput].forEach(function(inp){
+      if(inp)inp.addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
+    });
+    (pinInput||nameInput||submitBtn).focus();
+  }
+
+  var needsGate=(pin&&!(state&&state.pinVerified))||(collectInfo&&!(state&&state.studentName))||(tabSwitchEnabled&&!(state&&state.startedAt));
+
+  if(needsGate){
+    assessBlocks.forEach(function(block){block.style.visibility='hidden';});
+  }
+
+  if(state&&state.completed){
+    showFinishedUI(state);
+  }else if(needsGate){
+    showGateScreen();
+  }else{
+    assessBlocks.forEach(function(block){block.style.visibility='';});
+    beginAttempt();
+  }
+})();
+
+</script>
+</body></html>
